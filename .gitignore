@@ -1,0 +1,40 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.out
+*.lib
+*.dll
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDE & Editor
+.vscode/
+.vs/
+*.code-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Dependencies
+vcpkg_installed/
+
+# Scratch & temporary files
+proto.txt
+notes.txt
+*.tmp
+*.bak
+
+# Output files
+*.png
+*.csv
+output/

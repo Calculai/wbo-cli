@@ -1,0 +1,37 @@
+#include "include/APIClient.h"
+#include <iostream>
+
+APIClient::APIClient() {
+    // Constructor - could initialize curl globally if needed
+}
+
+APIClient::~APIClient() {
+    // Destructor - cleanup if needed
+}
+
+// Static callback for libcurl
+size_t APIClient::writeCallback(void* contents, size_t size, size_t nmemb, std::string* s) {
+    s->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
+// Fetch data from URL
+std::string APIClient::fetch(const std::string& url) {
+    CURL* curl = curl_easy_init();
+    std::string readBuffer;
+    
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            std::cerr << "Failed to fetch data: " << curl_easy_strerror(res) << std::endl;
+        }
+        
+        curl_easy_cleanup(curl);
+    }
+    
+    return readBuffer;
+}
