@@ -28,7 +28,7 @@ Thumbs.db
 # Dependencies
 vcpkg_installed/
 
-# Scratch & temporary files
+# Scratch, temporary files and design notes
 proto.txt
 notes.txt
 *.tmp
