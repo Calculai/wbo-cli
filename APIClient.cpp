@@ -1,5 +1,6 @@
 #include "include/APIClient.h"
 #include <iostream>
+#include <stdexcept>
 
 APIClient::APIClient() {
     // Constructor - could initialize curl globally if needed
@@ -34,4 +35,20 @@ std::string APIClient::fetch(const std::string& url) {
     }
     
     return readBuffer;
+}
+
+// Fetch and parse a JSON response
+nlohmann::json APIClient::fetchJson(const std::string& url) {
+    const std::string response = fetch(url);
+
+    if (response.empty()) {
+        throw std::runtime_error("API returned an empty response");
+    }
+
+    try {
+        return nlohmann::json::parse(response);
+    } catch (const nlohmann::json::parse_error& error) {
+        throw std::runtime_error(
+            std::string("Failed to parse API response as JSON: ") + error.what());
+    }
 }

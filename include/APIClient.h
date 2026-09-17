@@ -3,6 +3,7 @@
 
 #include <string>
 #include <curl/curl.h>
+#include <nlohmann/json.hpp>
 
 class APIClient {
 public:
@@ -11,6 +12,9 @@ public:
     
     // Fetch data from a URL and return response as string
     std::string fetch(const std::string& url);
+
+    // Fetch data from a URL and parse the response as JSON
+    nlohmann::json fetchJson(const std::string& url);
     
 private:
     // Static callback for libcurl (must be static to work with C API)
